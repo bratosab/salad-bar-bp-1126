@@ -3,19 +3,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { SaladModule } from './salad/salad-module';
+import { SharedMaterialModule } from './shared-material-module';
+import { Order } from './order/order';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    App
-  ],
+  declarations: [App, Order],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    SaladModule
+    SaladModule,
+    SharedMaterialModule,
+    ReactiveFormsModule,
   ],
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-  ],
-  bootstrap: [App]
+  providers: [provideBrowserGlobalErrorListeners()],
+  bootstrap: [App],
 })
-export class AppModule { }
+export class AppModule {}
