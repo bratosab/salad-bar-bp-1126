@@ -1,1 +1,7 @@
-<p>salad works!</p>
+<p>Welcome {{ orderService.name }}, choose you toppings below :  </p>
+
+<ul>
+    @for (topping of toppings; track topping.id) {
+    <li> {{ topping.name }} ({{ topping.price | currency:'€' }}) </li>
+    }
+</ul>
