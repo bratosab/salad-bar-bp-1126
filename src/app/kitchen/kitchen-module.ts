@@ -5,7 +5,6 @@ import { KitchenRoutingModule } from './kitchen-routing-module';
 import { Kitchen } from './kitchen';
 
 @NgModule({
-  declarations: [Kitchen],
-  imports: [CommonModule, KitchenRoutingModule],
+  imports: [CommonModule, KitchenRoutingModule, Kitchen],
 })
 export class KitchenModule {}

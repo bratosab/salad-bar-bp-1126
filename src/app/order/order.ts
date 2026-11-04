@@ -1,14 +1,17 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { frenchMobileValidator } from '../validators/french-mobile';
 import { Router } from '@angular/router';
 import { OrderService } from '../services/order';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatButton } from '@angular/material/button';
 
 @Component({
   selector: 'app-order',
-  standalone: false,
   styleUrl: './order.scss',
   templateUrl: './order.html',
+  imports: [ReactiveFormsModule, MatFormField, MatLabel, MatInput, MatError, MatButton],
 })
 export class Order {
   private formBuilder = inject(FormBuilder);
@@ -22,8 +25,8 @@ export class Order {
 
   onSubmit() {
     if (this.orderForm.valid) {
-      this.orderService.name = this.orderForm.controls.name.value 
-      this.orderService.tel = this.orderForm.controls.tel.value 
+      this.orderService.name = this.orderForm.controls.name.value;
+      this.orderService.tel = this.orderForm.controls.tel.value;
 
       this.router.navigate(['salad']);
     }

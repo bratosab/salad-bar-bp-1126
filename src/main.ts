@@ -1,5 +1,16 @@
-import { platformBrowser } from '@angular/platform-browser';
-import { AppModule } from './app/app-module';
+import { platformBrowser, BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 
-platformBrowser().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
+import { provideBrowserGlobalErrorListeners, importProvidersFrom } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
+import { AppRoutingModule } from './app/app-routing-module';
+import { SaladModule } from './app/salad/salad-module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { App } from './app/app';
+
+bootstrapApplication(App, {
+  providers: [
+    importProvidersFrom(BrowserModule, AppRoutingModule, SaladModule, ReactiveFormsModule),
+    provideBrowserGlobalErrorListeners(),
+    provideHttpClient(),
+  ],
+}).catch((err) => console.error(err));
