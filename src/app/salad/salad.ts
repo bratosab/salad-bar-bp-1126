@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, Signal, signal } from '@angular/core';
 import { OrderService } from '../services/order';
 import { ToppingsService } from '../services/toppings';
 import { Topping } from '../models/topping.model';
@@ -16,11 +16,17 @@ import { ChooseTopping, GetToppings, RemoveTopping, SaveToppings } from './store
 export class Salad implements OnInit {
   protected orderService = inject(OrderService);
   private store = inject(Store);
-  private toppingsService = inject(ToppingsService);
 
   public name = this.store.selectSignal<string>((state) => state.app.name);
   public toppings = this.store.selectSignal<Topping[]>((state) => state.salad.toppings);
   public chosenToppings = this.store.selectSignal<Topping[]>((state) => state.salad.chosenToppings);
+
+  public totalPrice: Signal<number> = computed(() => {
+    let total = 0;
+    this.chosenToppings().forEach((topping) => (total = total + topping.price));
+
+    return total;
+  });
 
   ngOnInit() {
     // this.toppingsService.getToppings().subscribe((toppings) => {
@@ -28,7 +34,7 @@ export class Salad implements OnInit {
     //   this.store.dispatch(SaveToppings({ list: toppings }))
     // });
 
-    this.store.dispatch(GetToppings())
+    this.store.dispatch(GetToppings());
 
     console.log('after subscribe');
   }
