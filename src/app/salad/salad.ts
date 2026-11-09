@@ -5,7 +5,7 @@ import { Topping } from '../models/topping.model';
 import { CurrencyPipe } from '@angular/common';
 import { Toppings } from './toppings/toppings';
 import { Store } from '@ngrx/store';
-import { ChooseTopping, RemoveTopping, SaveToppings } from './store/salad.actions';
+import { ChooseTopping, GetToppings, RemoveTopping, SaveToppings } from './store/salad.actions';
 
 @Component({
   selector: 'app-salad',
@@ -23,10 +23,12 @@ export class Salad implements OnInit {
   public chosenToppings = this.store.selectSignal<Topping[]>((state) => state.salad.chosenToppings);
 
   ngOnInit() {
-    this.toppingsService.getToppings().subscribe((toppings) => {
-      console.table(toppings);
-      this.store.dispatch(SaveToppings({ list: toppings }))
-    });
+    // this.toppingsService.getToppings().subscribe((toppings) => {
+    //   console.table(toppings);
+    //   this.store.dispatch(SaveToppings({ list: toppings }))
+    // });
+
+    this.store.dispatch(GetToppings())
 
     console.log('after subscribe');
   }

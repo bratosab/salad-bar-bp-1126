@@ -11,6 +11,7 @@ import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { appReducer } from './app/store/app.store';
 import { saladReducer } from './app/salad/store/salad.store';
+import { loadToppings } from './app/salad/store/salad.effects';
 
 bootstrapApplication(App, {
   providers: [
@@ -22,7 +23,7 @@ bootstrapApplication(App, {
       app: appReducer,
       salad: saladReducer
     }),
-    provideEffects(),
+    provideEffects({ loadToppings }),
     provideRouterStore(),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
   ],
