@@ -9,6 +9,8 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { appReducer } from './app/store/app.store';
+import { saladReducer } from './app/salad/store/salad.store';
 
 bootstrapApplication(App, {
   providers: [
@@ -16,7 +18,9 @@ bootstrapApplication(App, {
     provideHttpClient(),
     provideRouter([...appRoutes]),
     provideStore({
-      router: routerReducer
+      router: routerReducer,
+      app: appReducer,
+      salad: saladReducer
     }),
     provideEffects(),
     provideRouterStore(),

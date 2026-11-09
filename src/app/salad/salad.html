@@ -1,16 +1,16 @@
-<p>Welcome {{ orderService.name() }}, choose you toppings below :</p>
+<p>Welcome {{ name() }}, choose you toppings below :</p>
 
 <div class="toppings-lists">
   <app-toppings
     [toppings]="toppings()"
-    (clickTopping)="orderService.chooseTopping($event)"
+    (clickTopping)="chooseTopping($event)"
     listTitle="Available toppings :"
     buttonLabel="+1"
   ></app-toppings>
 
   <app-toppings
-    [toppings]="orderService.chosenToppings()"
-    (clickTopping)="orderService.removeTopping($event)"
+    [toppings]="chosenToppings()"
+    (clickTopping)="removeTopping($event)"
     listTitle="Your toppings :"
     buttonLabel="-1"
   ></app-toppings>

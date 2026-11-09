@@ -3,9 +3,6 @@ import { Topping } from '../models/topping.model';
 
 @Service()
 export class OrderService {
-    public name = signal('');
-    public tel = signal('');
-
     private chosenToppingsList = signal<Topping[]>([]);
 
     get chosenToppings() {

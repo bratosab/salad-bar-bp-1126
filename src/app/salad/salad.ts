@@ -4,6 +4,8 @@ import { ToppingsService } from '../services/toppings';
 import { Topping } from '../models/topping.model';
 import { CurrencyPipe } from '@angular/common';
 import { Toppings } from './toppings/toppings';
+import { Store } from '@ngrx/store';
+import { ChooseTopping, RemoveTopping, SaveToppings } from './store/salad.actions';
 
 @Component({
   selector: 'app-salad',
@@ -13,16 +15,27 @@ import { Toppings } from './toppings/toppings';
 })
 export class Salad implements OnInit {
   protected orderService = inject(OrderService);
+  private store = inject(Store);
   private toppingsService = inject(ToppingsService);
 
-  public toppings = signal<Topping[]>([])
+  public name = this.store.selectSignal<string>((state) => state.app.name);
+  public toppings = this.store.selectSignal<Topping[]>((state) => state.salad.toppings);
+  public chosenToppings = this.store.selectSignal<Topping[]>((state) => state.salad.chosenToppings);
 
   ngOnInit() {
     this.toppingsService.getToppings().subscribe((toppings) => {
       console.table(toppings);
-      this.toppings.set(toppings);
+      this.store.dispatch(SaveToppings({ list: toppings }))
     });
 
     console.log('after subscribe');
+  }
+
+  chooseTopping(topping: Topping) {
+    this.store.dispatch(ChooseTopping({ choice: topping }));
+  }
+
+  removeTopping(topping: Topping) {
+    this.store.dispatch(RemoveTopping({ choice: topping }));
   }
 }
