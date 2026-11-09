@@ -25,8 +25,8 @@ export class Order {
 
   onSubmit() {
     if (this.orderForm.valid) {
-      this.orderService.name = this.orderForm.controls.name.value;
-      this.orderService.tel = this.orderForm.controls.tel.value;
+      this.orderService.name.set(this.orderForm.controls.name.value);
+      this.orderService.tel.set(this.orderForm.controls.tel.value);
 
       this.router.navigate(['salad']);
     }

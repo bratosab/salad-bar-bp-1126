@@ -6,7 +6,7 @@ export const orderGuard: CanActivateFn = (route, state) => {
     const orderService = inject(OrderService);
     const router = inject(Router);
 
-    if(!!orderService.name && !!orderService.tel) {
+    if(!!orderService.name() && !!orderService.tel()) {
       return true;
     } else {
       router.navigate(['/']);
