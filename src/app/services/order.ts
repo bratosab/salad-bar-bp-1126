@@ -1,4 +1,4 @@
-import { Service, signal } from '@angular/core';
+import { computed, Service, Signal, signal } from '@angular/core';
 import { Topping } from '../models/topping.model';
 
 @Service()
@@ -11,6 +11,13 @@ export class OrderService {
     get chosenToppings() {
         return this.chosenToppingsList.asReadonly();
     }
+
+    public totalPrice: Signal<number> = computed(() => {
+        let total = 0
+        this.chosenToppingsList().forEach(topping => total = total + topping.price)
+
+        return total
+    })
 
     chooseTopping(newTopping: Topping) {
         this.chosenToppingsList.update(toppings => [...toppings, newTopping])

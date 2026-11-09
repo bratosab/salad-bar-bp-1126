@@ -1,5 +1,11 @@
+<h2> {{ listTitle() }} </h2>
 <ul>
-    @for (topping of toppings(); track topping.id) {
-    <li> {{ topping.name }} ({{ topping.price | currency:'€' }}) </li>
-    }
+  @for (topping of toppings(); track topping.id) {
+    <li>
+      {{ topping.name }} ({{ topping.price | currency: '€' }})
+      <button matButton (click)="clickTopping.emit(topping)">{{ buttonLabel() }}</button>
+    </li>
+  } @empty {
+    <p>No ingredients available</p>
+  }
 </ul>

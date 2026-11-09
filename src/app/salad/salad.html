@@ -1,5 +1,21 @@
-<p>Welcome {{ orderService.name() }}, choose you toppings below :  </p>
+<p>Welcome {{ orderService.name() }}, choose you toppings below :</p>
 
-<app-toppings [toppings]="toppings()"></app-toppings>
+<div class="toppings-lists">
+  <app-toppings
+    [toppings]="toppings()"
+    (clickTopping)="orderService.chooseTopping($event)"
+    listTitle="Available toppings :"
+    buttonLabel="+1"
+  ></app-toppings>
 
-<app-toppings [toppings]="orderService.chosenToppings()"></app-toppings>
+  <app-toppings
+    [toppings]="orderService.chosenToppings()"
+    (clickTopping)="orderService.removeTopping($event)"
+    listTitle="Your toppings :"
+    buttonLabel="-1"
+  ></app-toppings>
+
+  <div>
+    Total price : {{ orderService.totalPrice() | currency:'€' }}
+  </div>
+</div>
