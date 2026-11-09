@@ -15,11 +15,15 @@ import { ChooseTopping, GetToppings, RemoveTopping, SaveToppings } from './store
 })
 export class Salad implements OnInit {
   protected orderService = inject(OrderService);
+  protected toppingsService = inject(ToppingsService);
   private store = inject(Store);
 
   public name = this.store.selectSignal<string>((state) => state.app.name);
   public toppings = this.store.selectSignal<Topping[]>((state) => state.salad.toppings);
+  public loadToppings = this.store.selectSignal<boolean>((state) => state.salad.loadToppings);
   public chosenToppings = this.store.selectSignal<Topping[]>((state) => state.salad.chosenToppings);
+
+  public loadToppingsWithoutStore = signal(false);
 
   public totalPrice: Signal<number> = computed(() => {
     let total = 0;
@@ -29,12 +33,15 @@ export class Salad implements OnInit {
   });
 
   ngOnInit() {
-    // this.toppingsService.getToppings().subscribe((toppings) => {
-    //   console.table(toppings);
-    //   this.store.dispatch(SaveToppings({ list: toppings }))
-    // });
+    this.loadToppingsWithoutStore.set(true);
+    this.toppingsService.getToppings().subscribe((toppings) => {
+      console.table(toppings);
+      this.loadToppingsWithoutStore.set(false);
 
-    this.store.dispatch(GetToppings());
+      this.store.dispatch(SaveToppings({ list: toppings }));
+    });
+
+    // this.store.dispatch(GetToppings());
 
     console.log('after subscribe');
   }

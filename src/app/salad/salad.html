@@ -1,6 +1,9 @@
 <p>Welcome {{ name() }}, choose you toppings below :</p>
 
 <div class="toppings-lists">
+  @if (loadToppingsWithoutStore()) {
+    <p>Loading available toppings...</p>
+  }
   <app-toppings
     [toppings]="toppings()"
     (clickTopping)="chooseTopping($event)"
